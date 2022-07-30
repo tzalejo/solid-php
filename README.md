@@ -121,3 +121,72 @@ Beneficios de Principio de Abierto/Cerrado:
 - Prevenimos romper partes del sistema al añadir nuevas funcionalidades.
 - Facilidad en el Testeo de clases.
 - Separacion de las diferentes logicas.
+
+## Principio de Sustitucion de Liskov (LSP)
+
+Segun Wikipedia, dice que, cada clase que hereda de otra puede usarse como su padre sin necesidad de conocer la diferencia entre ellas.
+Hay 3 hitos que tenemos que tener en cuenta para no violar el principio de Liskov:
+
+- No fortalecer las pre-condiciones y no debilitar las pos-condiciones.
+- Las invariantes establecidas en la clase base deben mantenerse en las subclases.
+- Y nno puede existir un metodo en la subclases que vaya en contra de un comportamiento de la clase base. Esto se lo llama Restriccion Hostorica.
+
+### Una forma facil dee no romper con el Principio LSP
+
+Es utilizando Interfaces en lugar de extender nuestra clase hijasde una clase padre, podemos prescindir de la clase padre:
+
+```
+Interface CalculableShippingCost{
+  public function calculateShippingCost($peso, $destino);
+}
+
+class WorldWideShipping implements CalculableShippingCost {
+  public function calculateShippingCost($peso, $destino){
+    // codigo
+  }
+}
+
+```
+
+## Principio de Segregacion de Interfaz(ISP)
+
+El principio de segregacion dice que un cliente solo debe conocer los metodos que van a utilizar y no aquello que no utilizaran.
+Basicamente, a lo que se refiere este principio es que no debemos crear clases con miles de metodos donde termina siendo un archivo enorme.
+
+Ejemplo: supongamos que tenemos el modelo subcriber:
+
+```
+Class Subscriber extends Model {
+   public function subscribe(){...codigo}
+   public function unsubscribe(){...codigo}
+   public function getNotifyEmail(){...codigo}
+}
+```
+
+Luego tenemos una clase Notifications encargada de ejecutar la notificacion por mail.
+
+```
+Class Notifications {
+  public function send(Subscriber $subscriber, $menssage){
+    Mail::to($subscriber->getNotifyEmail())->queue();
+  }
+}
+```
+
+Como podemos ver, estamos inyectando el modelo Subscriber unicamente para utilizar uno de sus metods.
+Para solucioanr esto, veamos:
+
+```
+Interface NotificableInterface{
+  public function getNotifyEmail(): string;
+}
+
+
+Class Notifications {
+
+  public function send(NotificableInterface $notificable, $menssage){
+    Mail::to(notificable->getNotifyEmail())->queue();
+  }
+
+}
+```
