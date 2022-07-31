@@ -190,3 +190,25 @@ Class Notifications {
 
 }
 ```
+
+## Pricipio de Inversion de Dependencias.
+
+Primero debo dejar claro que la inversion de dependencia NO es lo mismo que Inyeccion de dependencia. La inversion de dependencia es un prinicpio, mientras que la inyeccion de dependencia es un patron de diseño.
+Aunque si tiene que ver ya que, el patron se basa en el principio de inversion.
+
+Este principio establece lo siguiente:
+
+Los módulos de alto nivel no deben depender de los módulos de bajo nivel, ambos deben depender de abstracciones.
+Las abstracciones no deben depender de los detalles, los detalles deben depender de las abstracciones.
+
+¿Que es una dependencia?
+Esta se da cuando una clase A usa metodos de la clase B.
+
+¿Que es un acoplamiento?
+Es el grado de dependencia entre la clase A y la clase B.
+Por ejemplo, si quisiera modificar la clase B cuanto tendria que modificar la clase A. Si tengo que redefinir la clase A se dice que tiene un alto acoplamiento, por lo contrario si tengo que modificar la clase B si tocar la clase A entonces digo que tengo un bajo acomplamiento.
+
+¿Que es una abstraccion?
+RAE: Separar por medio de una operacion intelectual un rasgo o una cualidad de algo para analizarlos aisladamente.
+En programacion la abstracción la alcanzamos creando interfaces o clases abstractas. Porque ninguno de los dos son algo concreto, es decir, no podemos crear objetos a partir de ninguna de ellas.
+
